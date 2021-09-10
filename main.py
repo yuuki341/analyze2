@@ -9,17 +9,22 @@ st.title('求人原稿に対する応募数の予測')
 
 uploaded_file=st.file_uploader("テストデータファイルをアップロード", type='csv')
 option=st.selectbox("モデル選択",('多層パーセプトロン', 'リッジ回帰','線形回帰','ランダムフォレスト'))
+a=0
 
-if uploaded_file is not None:
-    if option == '多層パーセプトロン':
-        ans=MLP.reg(uploaded_file)
-    elif option =='リッジ回帰':
-        ans=ridge.rid(uploaded_file)
-    elif option == '線形回帰':
-        ans=Linear.LR(uploaded_file)
-    elif option == 'ランダムフォレスト':
-        ans=RandomForestRegressor.RFR(uploaded_file)
+if uploaded_file is not None and option == '多層パーセプトロン':
+    ans=MLP.reg(uploaded_file)
+    a=1
+elif uploaded_file is not None and option =='リッジ回帰':
+    ans=ridge.rid(uploaded_file)
+    a=1
+elif uploaded_file is not None and option == '線形回帰':
+    ans=Linear.LR(uploaded_file)
+    a=1
+elif uploaded_file is not None and option == 'ランダムフォレスト':
+    ans=RandomForestRegressor.RFR(uploaded_file)
+    a=1
 
+if a==1:
     st.write('予測結果')
     st.dataframe(ans)
     csv = ans.to_csv(index=False)  
